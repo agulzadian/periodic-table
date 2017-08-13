@@ -20,6 +20,7 @@ var rowsArray = [
   {row: row8, limit: 15, offsetC: 56},
   {row: row9, limit: 15, offsetC: 88}
 ];
+// http stuff
 var data = new XMLHttpRequest();
 data.open('GET', '/js/data.json', true);
 data.onreadystatechange = function() {
@@ -30,71 +31,45 @@ data.onreadystatechange = function() {
 };
 data.send();
 
+// generate generating content and format of cells
 function generate() {
   function insertCells(row, setLimit, offsetC) {
     this.row = row;
     this.setI = setLimit;
     this.offsetC = offsetC;
 
-    if (row == row7 || row == row6) { // if break row
-      for (var i = 0; i < setLimit; i++) { //after the break
-        if (i > 2) {
-          var c = offsetC + 14 + i;
-          var cel = row.insertCell(i);
-          var el = elements[c];
-          var elGroup = el.groupBlock;
-          elGroup = elGroup.replace(/\s/g, "-").toLowerCase();
-          console.log(elGroup);
-          cel.innerHTML =
-            '<ul class="' + elGroup + '">' +
-            '<li>' + el.atomicNumber + '</li>' +
-            '<li>' + el.symbol + '</li>' +
-            '<li>' + el.name + '</li>' +
-            '<li>' + el.atomicMass + '</li>' +
-            '</ul>';
-        } else if (i < 2) { // before the break
-          var c = offsetC + i;
-          var cel = row.insertCell(i);
-          var el = elements[c];
-          var elGroup = el.groupBlock;
-          elGroup = elGroup.replace(/\s/g, "-").toLowerCase();
-          console.log(elGroup);
-          cel.innerHTML =
-            '<ul class="' + elGroup + '">' +
-            '<li>' + el.atomicNumber + '</li>' +
-            '<li>' + el.symbol + '</li>' +
-            '<li>' + el.name + '</li>' +
-            '<li>' + el.atomicMass + '</li>' +
-            '</ul>';
-        } else {
-          if (row == row6) {
-            var cel = row.insertCell(i);
-            cel.innerHTML = '57 - 71';
-          } else if (row == row7) {
-            var cel = row.insertCell(i);
-            cel.innerHTML = '89 - 103'
-          }
-        }
+    function setupCell(i, offsetRow) {
+      var offsetBreak = 0;
+      if (row == row6 && i > 2 || row == row7 && i > 2) {
+        offsetBreak = 14;
       }
-    } else { // normal insertCell
-      for (var i = 0; i < setLimit; i++) {
-        var c = offsetC + i;
+
+      var c = offsetRow + offsetBreak + i;
+      var cel = row.insertCell(i);
+      var el = elements[c];
+      var elGroup = el.groupBlock;
+      elGroup = elGroup.replace(/\s/g, "-").toLowerCase();
+      cel.innerHTML = '<ul class="' + elGroup + '">' +
+        '<li>' + el.atomicNumber + '</li>' +
+        '<li>' + el.symbol + '</li>' +
+        '<li>' + el.name + '</li>' +
+        '<li>' + el.atomicMass + '</li>' +
+        '</ul>';
+    }
+
+    for (var i = 0; i < setLimit; i++) { //after the break
+      if (row == row6 && i == 2) {
         var cel = row.insertCell(i);
-        var el = elements[c];
-        var elGroup = el.groupBlock;
-        elGroup = elGroup.replace(/\s/g, "-").toLowerCase();
-        console.log(elGroup);
-        cel.innerHTML =
-          '<ul class="' + elGroup + '">' +
-          '<li>' + el.atomicNumber + '</li>' +
-          '<li>' + el.symbol + '</li>' +
-          '<li>' + el.name + '</li>' +
-          '<li>' + el.atomicMass + '</li>' +
-          '</ul>';
+        cel.innerHTML = '57 - 71';
+      } else if (row == row7 && i == 2) {
+        var cel = row.insertCell(i);
+        cel.innerHTML = '89 - 103'
+      } else { // if not a break row
+        setupCell(i, offsetC);
       }
     }
   }
-
+  //actually producing the cells
   for (var i = 0; i < rowsArray.length; i++) {
     insertCells(rowsArray[i].row, rowsArray[i].limit, rowsArray[i].offsetC);
   }
@@ -113,4 +88,8 @@ function generate() {
   row8.insertCell(1);
   row9.insertCell(0);
   row9.insertCell(1);
+}
+
+function test() {
+  console.log('foo');
 }

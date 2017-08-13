@@ -48,17 +48,21 @@ ul {
 }
 
 .halogen{
-
+  background: lightgreen;
 }
 
 .post-transition-metal{
-
+  background: brown;
 }
 
 .lanthanoid{
-
+  background: orange;
 }
 
 .actinoid{
+  background: crimson;
+}
 
+.metal {
+  background: darkseagreen;
 }
