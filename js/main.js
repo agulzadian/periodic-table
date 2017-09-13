@@ -49,7 +49,7 @@ function generate() {
       var el = elements[c];
       var elGroup = el.groupBlock;
       elGroup = elGroup.replace(/\s/g, "-").toLowerCase();
-      cel.innerHTML = '<ul class="' + elGroup + '">' +
+      cel.innerHTML = '<ul class="' + elGroup + '" onclick=\'popUp()\' >' +
         '<li>' + el.atomicNumber + '</li>' +
         '<li>' + el.symbol + '</li>' +
         '<li>' + el.name + '</li>' +
@@ -90,6 +90,6 @@ function generate() {
   row9.insertCell(1);
 }
 
-function test() {
+function popUp() {
   console.log('foo');
 }

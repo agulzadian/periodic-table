@@ -21,6 +21,7 @@ li {
 ul {
   margin: 0;
   padding: 10px;
+  cursor: pointer;
 }
 
 .transition-metal {
@@ -65,4 +66,8 @@ ul {
 
 .metal {
   background: darkseagreen;
+}
+
+#pTable {
+
 }
